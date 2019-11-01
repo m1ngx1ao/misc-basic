@@ -1,0 +1,61 @@
+call inputBruch(ref(Zaehler), ref(Nenner))
+Schleifchen:
+call kuerzeBruch(ref(Zaehler), ref(Nenner))
+call printBruch(Zaehler, Nenner)
+input "Operation: ", O$
+call inputBruch(ref(C), ref(D))
+if O$="+" then
+	call plusBruch(ref(Zaehler), ref(Nenner), C , D)
+endif
+if O$="-" then
+	call plusBruch(ref(Zaehler), ref(Nenner), -C, D)
+endif
+if O$="*"  then
+	call malBruch(ref(Zaehler), ref(Nenner), C, D)
+endif
+if O$="/" then
+	call malBruch(ref(Zaehler), ref(Nenner), D, C)
+endif
+goto Schleifchen
+
+Function GGT(A, B)
+C =A%B
+while C<>0
+	A=B
+	B=C
+	C=A%B
+endwhile
+GGT=B
+endfunction
+
+subroutine printBruch(A, B)
+print A;
+print "/";
+print B
+endsubroutine
+
+subroutine inputBruch(ref(A), ref(B))
+input "Zaehler: ", A
+input "Nenner: ", B 
+endsubroutine
+
+subroutine kuerzeBruch(ref(A), ref(B))
+C=GGT(A, B)
+A=A/C
+B=B/C
+If B<0 then
+	A=-A
+	B=-B
+endif
+endsubroutine
+
+subroutine plusBruch(ref(A), ref(B), C, D)
+E=B*D
+A=A*D+C*B
+B=E
+endsubroutine
+
+subroutine malBruch(ref(A), ref(B), C, D)
+B=B*D
+A=A*C
+endsubroutine
